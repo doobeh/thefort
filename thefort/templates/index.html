@@ -8,9 +8,9 @@
 <title>ergo.io</title>
 <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport'/>
 <!-- Google Font -->
-<link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700|Source+Sans+Pro:400,600,700" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Anton:400,700|Source+Sans+Pro:400,600,700" rel="stylesheet">
 <!-- Font Awesome Icons -->
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-xVVam1KS4+Qt2OrFa+VdRUoXygyKIuNWUUUBZYv+n27STsJ7oDOHJgfF0bNKLMJF" crossorigin="anonymous">
 <!-- Main CSS -->
 <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet"/>
 </head>
@@ -30,24 +30,7 @@ NAVBAR
 			<a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
 			</li>
 			<li class="nav-item">
-			<a class="nav-link" href="/article.html">Python</a>
-			</li>
-			<li class="nav-item">
-			<a class="nav-link" href="/article.html">Culture</a>
-			</li>
-			<li class="nav-item">
-			<a class="nav-link" href="/article.html">CNC</a>
-			</li>
-			<li class="nav-item">
-			<a class="nav-link" href="./article.html">Tutorials</a>
-			</li>
-			<li class="nav-item">
-			<a class="nav-link" href="./about.html">About</a>
-			</li>
-		</ul>
-		<ul class="navbar-nav ml-auto d-flex align-items-center">
-			<li class="nav-item highlight">
-			<a class="nav-link" href="https://www.wowthemes.net/mundana-free-html-bootstrap-template/">Sign In</a>
+			<a class="nav-link" href="">About</a>
 			</li>
 		</ul>
 	</div>
@@ -65,9 +48,10 @@ MAIN
     
 <div class="container pt-4 pb-4">
 	<div class="row">
-		<div class="col-lg-6">
-			<div class="card border-0 mb-4 box-shadow h-xl-300">              
-                <div style="background-image: url(/static/img/demo/1.jpg); height: 150px;    background-size: cover;    background-repeat: no-repeat;"></div>
+		<div class="col-lg-8">
+		    <!-- Main Entry -->
+			<div class="card border-0 mb-2 box-shadow">
+{#                <div style="background-image: url(/static/img/demo/1.jpg); height: 100px;    background-size: cover;    background-repeat: no-repeat;"></div>#}
 				<div class="card-body px-0 pb-0 d-flex flex-column align-items-start">
 					<h2 class="h4 font-weight-bold">
 					<a class="text-dark" href="./article.html">Automating Flask deployments via Github webhooks</a>
@@ -75,156 +59,78 @@ MAIN
 					<p class="card-text">
 						Finding yourself SSH'ing into your server, git-pulling your code updates and restarting your
 						Flask app to show those changes&mdash; we can do better!  Embrace being lazy and automate all
-						the things&trade;
+						the things.
 					</p>
 					<div>
-						<small class="d-block"><a class="text-muted" href="./author.html">Anthony Plunkett</a></small>
-						<small class="text-muted">May 16th &middot; 15 min read</small>
+                        <small class="text-muted"><a class="text-muted" href="./author.html">Anthony Plunkett</a> May 16th &middot; 15 min read</small>
 					</div>
 				</div>
 			</div>
-		</div>
-		<div class="col-lg-6">
-			<div class="flex-md-row mb-4 box-shadow h-xl-300">
-				<div class="mb-3 d-flex align-items-center">
-					<img height="80" src="{{ url_for('static', filename='img/demo/blog4.jpg') }}">
-					<div class="pl-3">
-						<h2 class="mb-2 h6 font-weight-bold">
-						<a class="text-dark" href="./article.html">Nasa's IceSat space laser makes height maps of Earth</a>
-						</h2>
-						<div class="card-text text-muted small">
-							 Jake Bittle in LOVE/HATE
-						</div>
-						<small class="text-muted">Dec 12 &middot; 5 min read</small>
-					</div>
-				</div>
-				<div class="mb-3 d-flex align-items-center">
-					<img height="80" src="{{ url_for('static', filename='img/demo/blog5.jpg') }}">
-					<div class="pl-3">
-						<h2 class="mb-2 h6 font-weight-bold">
-						<a class="text-dark" href="./article.html">Underwater museum brings hope to Lake Titicaca</a>
-						</h2>
-						<div class="card-text text-muted small">
-							 Jake Bittle in LOVE/HATE
-						</div>
-						<small class="text-muted">Dec 12 &middot; 5 min read</small>
-					</div>
-				</div>
-				<div class="mb-3 d-flex align-items-center">
-					<img height="80" src="{{ url_for('static', filename='img/demo/blog6.jpg') }}">
-					<div class="pl-3">
-						<h2 class="mb-2 h6 font-weight-bold">
-						<a class="text-dark" href="./article.html">Sun-skimming probe starts calling home</a>
-						</h2>
-						<div class="card-text text-muted small">
-							 Jake Bittle in LOVE/HATE
-						</div>
-						<small class="text-muted">Dec 12 &middot; 5 min read</small>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-    
-<div class="container">
-	<div class="row justify-content-between">
-		<div class="col-md-8">
-			<h5 class="font-weight-bold spanborder"><span>Recent Posts</span></h5>
-			<div class="mb-3 d-flex justify-content-between">
-				<div class="pr-3">
-					<h2 class="mb-1 h4 font-weight-bold">
+
+            <!-- End Main Entry -->
+
+            <div class="card border-0 mb-2 box-shadow">
+				<div class="card-body px-0 pb-0 d-flex flex-column align-items-start">
+					<h2 class="mb-2 h4 font-weight-bold">
 					<a class="text-dark" href="./article.html">Posting a WTForm via AJAX with Flask</a>
 					</h2>
-					<p>
-						There are more coral species lurking in the deep ocean that previously thought.
+					<p class="card-text text-muted small">
+						Anytime you want to do something without causing a refresh, but require server-communication, we look
+                        to the magic of jQuery, specifically the AJAX functions — they can talk to a server in a background
+                        request and act on the data returned.
 					</p>
-					<div class="card-text text-muted small">
-						 Anthony Plunkett in PYTHON
+					<div>
+						<small class="text-muted"><a class="text-muted" href="./author.html">Anthony Plunkett</a> May 16th &middot; 15 min read</small>
 					</div>
-
 				</div>
-				<img height="120" src="{{ url_for('static', filename='img/demo/blog8.jpg') }}">
-			</div>
-			<div class="mb-3 d-flex justify-content-between">
-				<div class="pr-3">
-					<h2 class="mb-1 h4 font-weight-bold">
-					<a class="text-dark" href="./article.html">East Antarctica's glaciers are stirring</a>
-					</h2>
-					<p>
-						Nasa says it has detected the first signs of significant melting in a swathe of glaciers in East Antarctica.
-					</p>
-					<div class="card-text text-muted small">
-						 Jake Bittle in SCIENCE
-					</div>
-					<small class="text-muted">Dec 12 &middot; 5 min read</small>
-				</div>
-				<img height="120" src="{{ url_for('static', filename='img/demo/1.jpg') }}">
-			</div>
-			<div class="mb-3 d-flex justify-content-between">
-				<div class="pr-3">
-					<h2 class="mb-1 h4 font-weight-bold">
-					<a class="text-dark" href="./article.html">50 years ago, armadillos hinted that DNA wasn’t destiny</a>
-					</h2>
-					<p>
-						Nasa says it has detected the first signs of significant melting in a swathe of glaciers in East Antarctica.
-					</p>
-					<div class="card-text text-muted small">
-						 Jake Bittle in SCIENCE
-					</div>
-					<small class="text-muted">Dec 12 &middot; 5 min read</small>
-				</div>
-				<img height="120" src="{{ url_for('static', filename='img/demo/5.jpg') }}">
 			</div>
 		</div>
-		<div class="col-md-4 pl-4">
-            <h5 class="font-weight-bold spanborder"><span>Popular</span></h5>
-			<ol class="list-featured">
-				<li>
-				<span>
-				<h6 class="font-weight-bold">
-				<a href="./article.html" class="text-dark">Did Supernovae Kill Off Large Ocean Animals?</a>
-				</h6>
-				<p class="text-muted">
-					Jake Bittle in SCIENCE
-				</p>
-				</span>
-				</li>
-				<li>
-				<span>
-				<h6 class="font-weight-bold">
-				<a href="./article.html" class="text-dark">Humans Reversing Climate Clock: 50 Million Years</a>
-				</h6>
-				<p class="text-muted">
-					Jake Bittle in SCIENCE
-				</p>
-				</span>
-				</li>
-				<li>
-				<span>
-				<h6 class="font-weight-bold">
-				<a href="./article.html" class="text-dark">Unprecedented Views of the Birth of Planets</a>
-				</h6>
-				<p class="text-muted">
-					Jake Bittle in SCIENCE
-				</p>
-				</span>
-				</li>
-				<li>
-				<span>
-				<h6 class="font-weight-bold">
-				<a href="./article.html" class="text-dark">Effective New Target for Mood-Boosting Brain Stimulation Found</a>
-				</h6>
-				<p class="text-muted">
-					Jake Bittle in SCIENCE
-				</p>
-				</span>
-				</li>
-			</ol>
+
+
+
+		<div class="col-lg-4">
+			<div class="card border-0 mb-4 box-shadow h-xl-100">
+{#                <div style="background-image: url(/static/img/demo/1.jpg); height: 100px;    background-size: cover;    background-repeat: no-repeat;"></div>#}
+				<div class="card-body px-0 pb-0 d-flex flex-column align-items-start">
+                    <h2 class="h6 font-weight-bold">
+					Who dis?
+					</h2>
+					<p class="card-text small">
+						Hey, I'm Anthony Plunkett.
+                        I've been messing around on the Internet since '95. Deeply involved in tech, love Python and messing around with random tech projects.
+                        I hope you find something useful, if you do&mdash; <a href="">let me know!</a>
+					</p>
+
+					<h2 class="h6 font-weight-bold">
+					Snippets
+					</h2>
+					<p class="card-text small">
+						{{ lipsum(n=1, html=False, min=10, max=25) }}
+					</p>
+                    <p class="card-text small">
+                        {{ lipsum(n=1, html=False, min=10, max=25) }}
+                    </p>
+                    <p class="card-text small">
+                        {{ lipsum(n=1, html=False, min=10, max=25) }}
+                    </p>
+                    <p class="card-text small">
+                        {{ lipsum(n=1, html=False, min=10, max=25) }}
+                    </p>
+                    <p class="card-text small">
+                        {{ lipsum(n=1, html=False, min=10, max=25) }}
+                    </p>
+                    <p class="card-text small">
+                        {{ lipsum(n=1, html=False, min=10, max=25) }}
+                    </p>
+                    <p class="card-text small">
+                        {{ lipsum(n=1, html=False, min=10, max=25) }}
+                    </p>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
-    
+
 <!--------------------------------------
 FOOTER
 --------------------------------------->
@@ -236,6 +142,10 @@ FOOTER
 		</div>
 		<div>
 			Reinventing the wheel since 1982.
+            {# Login and Logout links (I think with a hat-tip to movie "The Net" :) #}
+            {% if current_user.is_authenticated %}<a class="muted"><i class="fas fa-door-open"></i></a>
+            {% else %}<a href="{{ url_for('security.login') }}" class="text-muted"><i class="far fa-pi"></i></a>
+            {% endif %}
 		</div>
 	</div>
 	</footer>
