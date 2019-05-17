@@ -85,6 +85,7 @@ class Tag(db.Model):
 
 class Article(db.Model):
     __tablename__ = "article"
+    id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String, index=True)
     slug = db.Column(db.String(100))
     markdown = db.Column(db.Text)
