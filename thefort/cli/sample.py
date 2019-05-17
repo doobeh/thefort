@@ -23,8 +23,10 @@ from faker import Faker
 class UserFactory(factory.Factory):
     username = factory.Faker('user_name')
     email = factory.Faker('email')
-    password = factory.Faker('password')
+    password = 'password'
     display_name = factory.Faker('name')
+    active = True
+    confirmed_at = datetime.now()
 
     class Meta:
         model = User

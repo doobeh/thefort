@@ -11,6 +11,9 @@ def home():
     quick_links = QuickLink.query.order_by(QuickLink.created.desc()).limit(10)
     return render_template("index.html", articles=articles, quick_links=quick_links)
 
+@bp.route("/about")
+def about():
+    return render_template('about.html')
 
 @bp.route("/a/<slug>")
 def article(slug):
