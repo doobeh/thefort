@@ -49,48 +49,40 @@ MAIN
 <div class="container pt-4 pb-4">
 	<div class="row">
 		<div class="col-lg-8">
-		    <!-- Main Entry -->
+
+			{% for article in articles %}
+
 			<div class="card border-0 mb-2 box-shadow">
-{#                <div style="background-image: url(/static/img/demo/1.jpg); height: 100px;    background-size: cover;    background-repeat: no-repeat;"></div>#}
 				<div class="card-body px-0 pb-0 d-flex flex-column align-items-start">
 					<h2 class="h4 font-weight-bold">
-					<a class="text-dark" href="./article.html">Automating Flask deployments via Github webhooks</a>
+					<a class="text-dark" href="{{ article.absolute_url() }}">{{ article.title }}</a>
 					</h2>
-					<p class="card-text">
-						Finding yourself SSH'ing into your server, git-pulling your code updates and restarting your
-						Flask app to show those changes&mdash; we can do better!  Embrace being lazy and automate all
-						the things.
-					</p>
+					<span class="card-text">
+						{{ article.intro|safe }}
+					</span>
 					<div>
-                        <small class="text-muted"><a class="text-muted" href="./author.html">Anthony Plunkett</a> May 16th &middot; 15 min read</small>
+                        <small class="text-muted">
+							<a class="text-muted" href="{{ article.user.absolute_url() }}">
+								{{ article.user.display_name }}
+							</a>
+							&mdash;
+							{{ article.created.strftime('%A, %d %B %Y') }}
+							&middot;
+							<a href="#" data-toggle="tooltip" data-placement="right" title="{{ article.reading_time }} read">
+								<i class="fal fa-stopwatch"></i>
+							</a>
+						</small>
 					</div>
 				</div>
 			</div>
+			{% endfor %}
 
-            <!-- End Main Entry -->
-
-            <div class="card border-0 mb-2 box-shadow">
-				<div class="card-body px-0 pb-0 d-flex flex-column align-items-start">
-					<h2 class="mb-2 h4 font-weight-bold">
-					<a class="text-dark" href="./article.html">Posting a WTForm via AJAX with Flask</a>
-					</h2>
-					<p class="card-text text-muted small">
-						Anytime you want to do something without causing a refresh, but require server-communication, we look
-                        to the magic of jQuery, specifically the AJAX functions — they can talk to a server in a background
-                        request and act on the data returned.
-					</p>
-					<div>
-						<small class="text-muted"><a class="text-muted" href="./author.html">Anthony Plunkett</a> May 16th &middot; 15 min read</small>
-					</div>
-				</div>
-			</div>
 		</div>
 
 
 
 		<div class="col-lg-4">
 			<div class="card border-0 mb-4 box-shadow h-xl-100">
-{#                <div style="background-image: url(/static/img/demo/1.jpg); height: 100px;    background-size: cover;    background-repeat: no-repeat;"></div>#}
 				<div class="card-body px-0 pb-0 d-flex flex-column align-items-start">
                     <h2 class="h6 font-weight-bold">
 					Who dis?
@@ -104,27 +96,11 @@ MAIN
 					<h2 class="h6 font-weight-bold">
 					Snippets
 					</h2>
-					<p class="card-text small">
-						{{ lipsum(n=1, html=False, min=10, max=25) }}
-					</p>
-                    <p class="card-text small">
-                        {{ lipsum(n=1, html=False, min=10, max=25) }}
-                    </p>
-                    <p class="card-text small">
-                        {{ lipsum(n=1, html=False, min=10, max=25) }}
-                    </p>
-                    <p class="card-text small">
-                        {{ lipsum(n=1, html=False, min=10, max=25) }}
-                    </p>
-                    <p class="card-text small">
-                        {{ lipsum(n=1, html=False, min=10, max=25) }}
-                    </p>
-                    <p class="card-text small">
-                        {{ lipsum(n=1, html=False, min=10, max=25) }}
-                    </p>
-                    <p class="card-text small">
-                        {{ lipsum(n=1, html=False, min=10, max=25) }}
-                    </p>
+					{% for snippet in quick_links %}
+					<span class="card-text small mb-2">
+						{{ snippet|safe }}
+					</span>
+					{% endfor %}
 				</div>
 			</div>
 		</div>

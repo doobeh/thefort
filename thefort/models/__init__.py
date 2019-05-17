@@ -4,6 +4,7 @@ from flask_security.utils import hash_password
 from datetime import datetime
 from slugify import slugify
 from thefort.utils import permalink, process_markdown
+import readtime
 
 
 roles_users = db.Table(
@@ -50,6 +51,10 @@ class User(db.Model, UserMixin):
     def is_admin(self):
         return "admin" in [x.name for x in self.roles]
 
+    @permalink
+    def absolute_url(self):
+        return "frontend.user", {"username": self.username}
+
     def __repr__(self):
         return self.username
 
@@ -94,8 +99,10 @@ class Article(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String, index=True)
     slug = db.Column(db.String(100))
-    markdown = db.Column(db.Text)
-    processed = db.Column(db.Text)
+    intro_markdown = db.Column(db.Text)
+    intro = db.Column(db.Text)
+    content_markdown = db.Column(db.Text)
+    content = db.Column(db.Text)
     last_processed = db.Column(db.DateTime)
     created = db.Column(db.DateTime, default=datetime.now)
     published = db.Column(db.Boolean, default=True)
@@ -105,11 +112,17 @@ class Article(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     user = db.relationship('User', backref=db.backref('articles', lazy='dynamic'))
 
-    def __init__(self, title, markdown, tags, user):
+    @property
+    def reading_time(self):
+        return readtime.of_html(self.content).text
+
+    def __init__(self, title, content, intro, tags, user):
         self.title = title
         self.slug = slugify(title)
-        self.markdown = markdown
-        self.processed = process_markdown(markdown)
+        self.intro_markdown = intro
+        self.content_markdown = content
+        self.content = process_markdown(content)
+        self.intro = process_markdown(intro)
         self.user = user
 
         for tag in tags.split(","):
@@ -139,7 +152,7 @@ class Article(db.Model):
 
     @permalink
     def absolute_url(self):
-        return "frontend.article", {"tag": self.name}
+        return "frontend.article", {"slug": self.slug}
 
     def __repr__(self):
         return f"{self.title}"
@@ -149,15 +162,16 @@ class QuickLink(db.Model):
     __tablename__ = "quick_link"
     id = db.Column(db.Integer, primary_key=True)
     markdown = db.Column(db.Text)
-    processed = db.Column(db.Text)
+    content = db.Column(db.Text)
     published = db.Column(db.Boolean, default=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     user = db.relationship('User', backref=db.backref('quick_links', lazy='dynamic'))
+    created = db.Column(db.DateTime, default=datetime.now)
 
     def __init__(self, user, markdown):
         self.markdown = markdown
         self.user = user
-        self.processed = process_markdown(markdown)
+        self.content = process_markdown(markdown)
 
     def __repr__(self):
-        return f"{self.processed}"
+        return f"{self.content}"

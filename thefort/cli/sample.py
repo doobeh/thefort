@@ -24,6 +24,7 @@ class UserFactory(factory.Factory):
     username = factory.Faker('user_name')
     email = factory.Faker('email')
     password = factory.Faker('password')
+    display_name = factory.Faker('name')
 
     class Meta:
         model = User
@@ -31,7 +32,8 @@ class UserFactory(factory.Factory):
 
 class ArticleFactory(factory.Factory):
     title = factory.Faker('sentence')
-    markdown = factory.Faker('text', max_nb_chars=2000)
+    content = factory.Faker('text', max_nb_chars=2000)
+    intro = factory.Faker('text', max_nb_chars=500)
     tags = 'abc,def,ghi'
     user = factory.SubFactory(UserFactory)
 
@@ -78,9 +80,8 @@ def load():
         db.session.add(user)
     db.session.commit()
     users = User.query.all()
-
     for x in users:
-        print(x, x.roles)
+        print(x.username)
 
     # create a few tags to pick from, so we have lots of overlap.
 
@@ -96,8 +97,6 @@ def load():
             user=random.choice(users),
             tags=",".join(random.sample(tags, random.randint(1, 5)))
         )
-
-        print(article, article.user, article.tags)
         db.session.add(article)
     db.session.commit()
 

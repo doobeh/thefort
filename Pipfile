@@ -16,6 +16,7 @@ psycopg2 = "*"
 bcrypt = "*"
 factory-boy = "*"
 mistune = "*"
+readtime = "*"
 
 [requires]
 python_version = "3.7"
