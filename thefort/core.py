@@ -15,6 +15,7 @@ def create_app(config=None):
         SECRET_KEY="default",
         SQLALCHEMY_DATABASE_URI="postgresql://localhost/thefort",
         SQLALCHEMY_TRACK_MODIFICATIONS=False,
+        SECURITY_PASSWORD_SALT="NOT-SECURE-CHANGE-ME",
     )
 
     # app.config.from_object('origin.settings')

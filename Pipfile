@@ -11,6 +11,11 @@ flask = "*"
 flask-security = "*"
 flask-sqlalchemy = "*"
 python-slugify = "*"
+mixer = "*"
+psycopg2 = "*"
+bcrypt = "*"
+factory-boy = "*"
+mistune = "*"
 
 [requires]
 python_version = "3.7"
