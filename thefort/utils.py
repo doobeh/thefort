@@ -1,3 +1,7 @@
+from flask import url_for
+from werkzeug.routing import BuildError
+
+
 def usd_filter(value):
     return "${:,.2f}".format(float(value / 100.0))
 
@@ -8,3 +12,14 @@ def decimal_places(value, places=2):
 
 def zfill(value, places=15):
     return str(value).zfill(places)
+
+
+def permalink(function):
+    """ Shortcut to access a url from a SQLAlchemy model easily"""
+    def inner(*args, **kwargs):
+        endpoint, values = function(*args, **kwargs)
+        try:
+            return url_for(endpoint, **values)
+        except BuildError:
+            return
+    return inner
