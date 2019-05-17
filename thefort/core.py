@@ -2,6 +2,7 @@ from werkzeug.utils import find_modules, import_string
 from flask import Flask
 from .database import db
 from .cli import core_cli, db_cli, user_cli
+from .cli.sample import sample_cli
 from .models import User, Role
 from flask_security import Security, SQLAlchemyUserDatastore
 from .utils import usd_filter, zfill, decimal_places
@@ -56,6 +57,7 @@ def register_cli(app):
     app.cli.add_command(db_cli)
     app.cli.add_command(core_cli)
     app.cli.add_command(user_cli)
+    app.cli.add_command(sample_cli)
 
 
 def register_jinja_filters(app):
