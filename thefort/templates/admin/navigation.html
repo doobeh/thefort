@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    <h2>Navigations</h2>
+
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">Title</th>
+            <th scope="col">Tags</th>
+            <th scope="col">Visible</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for category in categories %}
+            <tr>
+                <td>
+                    {{ category.title|title }}
+                </td>
+                <td>
+                    {% for tag in category.tags %}
+                        <span>
+              <a href="{{ url_for('frontend.category', title=tag) }}" class="badge badge-dark">
+                {{ tag }}
+              </a>
+              </span>
+                    {% endfor %}
+                </td>
+                <td>
+                    <input
+                            id="toggle-event" {% if category.visible %}checked{% endif %}
+                            type="checkbox" data-ref="{{ category.id }}"
+                            data-toggle="toggle"
+                            data-on="Published"
+                            data-off="Hidden"
+                            data-onstyle="success" data-offstyle="danger"
+                            data-size="mini"
+                    >
+                    <a href="{{ url_for('admin.navigation_edit', ref=category.id) }}"
+                       class="btn btn-xs btn-info">Edit</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <input id="csrf" type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+    <a href="{{ url_for('admin.navigation_create') }}" class="btn  btn-sm btn-primary btn-block">Add</a>
+
+
+{% endblock %}
+
+{% block scripts %}
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+    <script>
+        $(function () {
+            let csrf = $('#csrf').val();
+
+            $.ajaxSetup({
+                beforeSend: function (xhr, settings) {
+                    if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+                        xhr.setRequestHeader("X-CSRFToken", csrf);
+                    }
+                }
+            });
+
+            $('input[data-toggle="toggle"]').change(function () {
+                let ref = $(this).data('ref');
+                let status = $(this).prop('checked');
+                let payload = {
+                    'ref': ref,
+                    'status': status,
+                    'csrf_token': csrf
+                };
+                console.log(payload);
+                $.ajax('{{ url_for('admin.navigation_set') }}', {
+                    data: JSON.stringify(payload),
+                    contentType: 'application/json',
+                    method: 'POST',
+                    dataType: "json"
+                });
+            });
+        });
+    </script>
+{% endblock %}

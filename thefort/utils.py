@@ -33,4 +33,6 @@ def process_markdown(md):
     parse it for embed tags to also turn into the
     html representations"""
 
-    return markdown(md)
+    # Todo: ui isn't actually generating md yet...
+
+    return md

@@ -34,7 +34,16 @@ class User(db.Model, UserMixin):
         "Role", secondary=roles_users, backref=db.backref("users", lazy="dynamic")
     )
 
-    def __init__(self, username, password, email, roles=None, active=None, confirmed_at=None, display_name=None):
+    def __init__(
+        self,
+        username,
+        password,
+        email,
+        roles=None,
+        active=None,
+        confirmed_at=None,
+        display_name=None,
+    ):
         self.username = username
         self.password = hash_password(password)
         if roles:
@@ -91,7 +100,7 @@ class Tag(db.Model):
         self.name = name
 
     def __repr__(self):
-        return "<{name}>".format(name=self.name)
+        return "{name}".format(name=self.name)
 
 
 class Article(db.Model):
@@ -110,7 +119,9 @@ class Article(db.Model):
         "Tag", secondary=tags, backref=db.backref("articles", lazy="dynamic")
     )
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
-    user = db.relationship('User', backref=db.backref('articles', lazy='dynamic'))
+    user = db.relationship(
+        "User", backref=db.backref("articles", lazy="dynamic", order_by=created.desc())
+    )
 
     @property
     def reading_time(self):
@@ -165,7 +176,7 @@ class QuickLink(db.Model):
     content = db.Column(db.Text)
     published = db.Column(db.Boolean, default=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
-    user = db.relationship('User', backref=db.backref('quick_links', lazy='dynamic'))
+    user = db.relationship("User", backref=db.backref("quick_links", lazy="dynamic"))
     created = db.Column(db.DateTime, default=datetime.now)
 
     def __init__(self, user, markdown):
@@ -175,3 +186,17 @@ class QuickLink(db.Model):
 
     def __repr__(self):
         return f"{self.content}"
+
+
+class Category(db.Model):
+    """Handles what gets displayed on the main menu"""
+
+    __tablename__ = "category"
+    id = db.Column(db.Integer, primary_key=True)
+    visible = db.Column(db.Boolean, default=True)
+    title = db.Column(db.String)
+    tags = db.Column(db.JSON)
+
+    @permalink
+    def absolute_url(self):
+        return "frontend.category", {"title": self.title}

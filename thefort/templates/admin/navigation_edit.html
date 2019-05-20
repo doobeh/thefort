@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/tags.css') }}" type="text/css" media="screen" charset="utf-8">
+{% endblock %}
+
+{% block content %}
+    <div class="row justify-content-center">
+        <div class="col-md-8 border-1 entry">
+            <form method="post" action="{{ url_for('admin.navigation_edit', ref=category.id) }}">
+                <input id="csrf" type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control" name="title" placeholder="Title" value="{{ category.title }}">
+                  <div class="input-group-append">
+                    <span class="input-group-text" id="basic-addon2">Navigation Title</span>
+                  </div>
+                </div>
+
+                <input name="tags" type="text" id="tags" data-role="tagsinput" class="token" placeholder="add,tags,here"/>
+
+                <div class="text-right mt-3">
+                    <button type="submit" data-submit="go" class="btn-block btn-info btn btn-large">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock content %}
+
+
+{% block scripts %}
+
+    <script src="{{ url_for('static', filename='js/tags.js') }}"></script>
+    <script>
+        window.addEventListener("load", function () {
+            $(function () {
+                {% for tag in category.tags %}
+                    $('#tags').tagsinput('add', '{{ tag }}');
+                {% endfor %}
+            });
+        });
+    </script>
+{#    <script>#}
+{#        $('button[data-submit="go"]').on("click", function () {#}
+{#            let title = $('#title').val();#}
+{#            let tags = $('#tags').val();#}
+{#            let csrf = $('#csrf').val();#}
+{##}
+{#            var action = $.post(#}
+{#                '{{ url_for('admin.navigation_create') }}',#}
+{#                {#}
+{#                    title: title,#}
+{#                    tags: tags,#}
+{#                    csrf_token: csrf#}
+{#                }#}
+{#            );#}
+{##}
+{#            action.done(function (data) {#}
+{#                $(".entry").load("{{ url_for('admin.article_created') }}")#}
+{#            });#}
+{#            console.log($(this).text());#}
+{#        });#}
+{#    </script>#}
+{% endblock %}
+

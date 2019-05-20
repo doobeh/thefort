@@ -12,7 +12,7 @@ from flask import current_app
 import os
 import random
 from datetime import datetime
-from thefort.models import User, Role, Article, QuickLink, Tag
+from thefort.models import User, Role, Article, QuickLink, Tag, Category
 import factory
 from faker import Faker
 
@@ -21,10 +21,10 @@ from faker import Faker
 
 
 class UserFactory(factory.Factory):
-    username = factory.Faker('user_name')
-    email = factory.Faker('email')
-    password = 'password'
-    display_name = factory.Faker('name')
+    username = factory.Faker("user_name")
+    email = factory.Faker("email")
+    password = "password"
+    display_name = factory.Faker("name")
     active = True
     confirmed_at = datetime.now()
 
@@ -33,10 +33,10 @@ class UserFactory(factory.Factory):
 
 
 class ArticleFactory(factory.Factory):
-    title = factory.Faker('sentence')
-    content = factory.Faker('text', max_nb_chars=2000)
-    intro = factory.Faker('text', max_nb_chars=500)
-    tags = 'abc,def,ghi'
+    title = factory.Faker("sentence")
+    content = factory.Faker("text", max_nb_chars=2000)
+    intro = factory.Faker("text", max_nb_chars=500)
+    tags = "abc,def,ghi"
     user = factory.SubFactory(UserFactory)
 
     class Meta:
@@ -45,10 +45,18 @@ class ArticleFactory(factory.Factory):
 
 class QuickLinkFactory(factory.Factory):
     user = factory.SubFactory(UserFactory)
-    markdown = factory.Faker('text', max_nb_chars=500)
+    markdown = factory.Faker("text", max_nb_chars=200)
 
     class Meta:
         model = QuickLink
+
+
+class CategoryFactory(factory.Factory):
+    title = factory.Faker("word")
+    tags = factory.Faker("words")
+
+    class Meta:
+        model = Category
 
 
 sample_cli = AppGroup("sample")
@@ -76,19 +84,21 @@ def load():
 
     # create users.
 
-    for x in range(10):
+    for x in range(3):
         user = UserFactory.build()
         user.roles = random.sample(roles, 2)
         db.session.add(user)
     db.session.commit()
     users = User.query.all()
+    click.echo('Users')
+    click.echo('-' * 20)
     for x in users:
-        print(x.username)
+        click.echo(x.username)
 
     # create a few tags to pick from, so we have lots of overlap.
 
     fake = Faker()
-    fake.add_provider('lorem')
+    fake.add_provider("lorem")
     tags = fake.words(nb=20, unique=True)
 
     # create articles allocated to random users, and with a random
@@ -97,7 +107,7 @@ def load():
     for x in range(200):
         article = ArticleFactory(
             user=random.choice(users),
-            tags=",".join(random.sample(tags, random.randint(1, 5)))
+            tags=",".join(random.sample(tags, random.randint(1, 5))),
         )
         db.session.add(article)
     db.session.commit()
@@ -105,12 +115,15 @@ def load():
     # create quicklinks.
 
     for x in range(100):
-        quick_link = QuickLinkFactory(
-            user=random.choice(users),
-        )
+        quick_link = QuickLinkFactory(user=random.choice(users))
         db.session.add(quick_link)
     db.session.commit()
 
     ql = QuickLink.query.all()
-    for x in ql:
-        print(x, x.user)
+
+    # create a few navigation aids
+
+    for x in range(3):
+        category = CategoryFactory(tags=random.sample(tags, random.randint(1, 5)))
+        db.session.add(category)
+    db.session.commit()

@@ -2,22 +2,32 @@
 
 {% block content %}
     <div class="row">
-    <div class="col-md-12">
-    <h2 class="h4 font-weight-bold pb-0">
-        <a class="text-dark" href="{{ article.absolute_url() }}">{{ article.title }}</a>
-    </h2>
-    <div class="pb-3">
-        <small class="text-muted">
-            <a class="text-muted" href="{{ article.user.absolute_url() }}">
-                {{ article.user.display_name }}
-            </a>
-            &mdash;
-            {{ article.created.strftime('%A, %d %B %Y') }}
+        <div class="col-md-12">
+            <h2 class="h4 font-weight-bold pb-0">
+                <a class="text-dark" href="{{ article.absolute_url() }}">{{ article.title }}</a>
+            </h2>
+            <div class="pb-3">
+                <small class="text-muted">
+                    <a class="text-muted" href="{{ article.user.absolute_url() }}">
+                        {{ article.user.display_name }}
+                    </a>
+                    &mdash;
+                    {{ article.created.strftime('%A, %d %B %Y') }}
 
-        </small>
-    </div>
+                </small>
+            </div>
 
-    <span class="card-text">{{ article.content|safe }}</span>
+            <span class="card-text">{{ article.content|safe }}</span>
+            <div class="pb-3">
+                <small class="text-muted">
+                    {% for tag in article.tags %}
+                        <a href="{{ tag.absolute_url() }}" class="badge badge-dark">
+                            {{ tag }}
+                        </a>
+                    {% endfor %}
+
+                </small>
+            </div>
+        </div>
     </div>
-</div>
 {% endblock %}

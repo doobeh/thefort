@@ -19,14 +19,16 @@
 {% block content %}
     <div class="row justify-content-center">
         <div class="col-md-8 border-1 entry">
-            <p id="intro" class="editable">Intro text-- something that summarizes the articles content.</p>
+            <div id="intro" class="editable">{{ article.intro|safe }}</div>
             <hr/>
-            <h4 id="title" class="editable">Article Title</h4>
+            <h4 id="title" class="editable">{{ article.title|safe }}</h4>
             <input id="csrf" type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-            <div id="content" class="editable">The main article!</div>
-            <input type="text" id="tags" data-role="tagsinput" class="token" placeholder="add,tags,here"/>
+            <div id="content" class="editable">{{ article.content|safe }}</div>
+
+                <input type="text" id="tags" data-role="tagsinput" class="token" placeholder="add,tags,here"/>
+
             <div class="text-right">
-                <button data-submit="go" class="btn-info btn btn-large">Save</button>
+                <button data-submit="go" class="mt-2 btn-block btn-info btn btn-large">Save</button>
             </div>
 
         </div>
@@ -50,7 +52,9 @@
                 $('.editable').mediumInsert({
                     editor: editor
                 });
-                $('.token').tokenfield()
+                {% for tag in article.tags %}
+                $('#tags').tagsinput('add', '{{ tag }}');
+                {% endfor %}
             });
         });
     </script>
@@ -62,10 +66,12 @@
             let content = $('#content').html();
             let tags = $('#tags').val();
             let csrf = $('#csrf').val();
+            let ref = {{ article.id }};
 
             var action = $.post(
-                '{{ url_for('admin.article_create') }}',
+                '{{ url_for('admin.article_edit', ref=article.id) }}',
                 {
+                    ref: ref,
                     intro: intro,
                     title: title,
                     content: content,
@@ -75,7 +81,7 @@
             );
 
             action.done(function (data) {
-                $(".entry").load("{{ url_for('admin.article_created') }}")
+                $(".entry").load("{{ url_for('admin.article_edited') }}")
             });
             console.log($(this).text());
         });

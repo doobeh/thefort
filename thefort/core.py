@@ -6,6 +6,7 @@ from .cli.sample import sample_cli
 from .models import User, Role
 from flask_security import Security, SQLAlchemyUserDatastore
 from .utils import usd_filter, zfill, decimal_places
+from flask_wtf.csrf import CSRFProtect
 
 
 def create_app(config=None):
@@ -29,7 +30,14 @@ def create_app(config=None):
     register_cli(app)
     register_blueprints(app)
     register_jinja_filters(app)
+    register_csrf(app)
     return app
+
+
+def register_csrf(app):
+    csrf = CSRFProtect()
+    csrf.init_app(app)
+    return None
 
 
 def register_security(app):
