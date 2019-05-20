@@ -2,6 +2,7 @@
 
 {% block head %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/tags.css') }}" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-typeahead/2.10.6/jquery.typeahead.min.css" integrity="sha256-CU0/rbxVB3Eixd3bbIuJxHJLDnXriJS9cwp/BfcgpLw=" crossorigin="anonymous" />
 {% endblock %}
 
 {% block content %}
@@ -31,14 +32,31 @@
 {% block scripts %}
 
     <script src="{{ url_for('static', filename='js/tags.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-typeahead/2.10.6/jquery.typeahead.min.js" integrity="sha256-W+Cxk9exgjON2p73M4RcoKvCpQUZ+IjXhEzZk6rlg9M=" crossorigin="anonymous"></script>
     <script>
+        let tags = new Bloodhound({
+          datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+          queryTokenizer: Bloodhound.tokenizers.whitespace,
+          prefetch: {
+            url: '{{ url_for('admin.tags_json') }}',
+            filter: function(list) {
+              return $.map(list, function(tag) {
+                return { name: tag }; });
+            }
+          }
+        });
+        tags.initialize();
 
-        window.addEventListener("load", function () {
-            $(function () {
-                $('.token').tokenfield()
-            });
+        $('#tags').tagsinput({
+          typeaheadjs: {
+            name: 'tags',
+            displayKey: 'name',
+            valueKey: 'name',
+            source: tags.ttAdapter()
+          }
         });
     </script>
+
 {#    <script>#}
 {#        $('button[data-submit="go"]').on("click", function () {#}
 {#            let title = $('#title').val();#}

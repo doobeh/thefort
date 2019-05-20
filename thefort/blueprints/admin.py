@@ -78,6 +78,12 @@ def navigation_set():
     return abort(404)
 
 
+@bp.route("/tags.json")
+def tags_json():
+    tags = Tag.query.all()
+    return jsonify(tags=[tag.name for tag in tags])
+
+
 @bp.route("/add-article", methods=["post", "get"])
 @login_required
 def article_create():

@@ -24,7 +24,7 @@
                 <td>
                     {% for tag in category.tags %}
                         <span>
-              <a href="{{ url_for('frontend.category', title=tag) }}" class="badge badge-dark">
+              <a href="{{ url_for('frontend.tag', tag=tag) }}" class="badge badge-dark">
                 {{ tag }}
               </a>
               </span>
