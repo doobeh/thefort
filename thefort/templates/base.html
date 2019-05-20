@@ -21,13 +21,13 @@
 NAVBAR
 --------------------------------------->
 <header>
-    <nav class="navbar navbar-expand-md navbar-light fixed-top bg-white">
+    <nav class="navbar navbar-expand-sm navbar-light fixed-top bg-white">
         <div class="container">
             <a class="navbar-brand" href="/"><strong>{{ config["SITE_NAME"] }}</strong></a>
-            <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-menu">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="navbar-collapse collapse">
+            <div class="navbar-collapse collapse" id="main-menu">
                 <ul class="navbar-nav mr-auto d-flex align-items-center">
                     <li class="nav-item">
                         <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
@@ -41,7 +41,7 @@ NAVBAR
                         <a class="nav-link" href="{{ url_for('frontend.about') }}">About</a>
                     </li>
                 </ul>
-                <ul class="navbar-nav ml-auto">
+                <ul class="navbar-nav ml-auto align-items-center">
                     {% block nav %}
                     <li class="nav-item dropdown dropdown-menu-right">
                         <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

@@ -32,18 +32,19 @@
 {% block scripts %}
 
     <script src="{{ url_for('static', filename='js/tags.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-typeahead/2.10.6/jquery.typeahead.min.js" integrity="sha256-W+Cxk9exgjON2p73M4RcoKvCpQUZ+IjXhEzZk6rlg9M=" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='js/typeahead.bundle.min.js') }}"></script>
     <script>
         let tags = new Bloodhound({
-          datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
-          queryTokenizer: Bloodhound.tokenizers.whitespace,
-          prefetch: {
-            url: '{{ url_for('admin.tags_json') }}',
-            filter: function(list) {
-              return $.map(list, function(tag) {
-                return { name: tag }; });
+            ttl: 0,
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            prefetch: {
+                url: '{{ url_for('admin.tags_json') }}',
+                filter: function(dict) {
+                return $.map(dict.tags, function(tag) {
+                    return { name: tag }; });
+                }
             }
-          }
         });
         tags.initialize();
 
@@ -53,7 +54,8 @@
             displayKey: 'name',
             valueKey: 'name',
             source: tags.ttAdapter()
-          }
+          },
+            freeInput: true
         });
     </script>
 
