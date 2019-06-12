@@ -17,7 +17,7 @@ bcrypt = "*"
 factory-boy = "*"
 mistune = "*"
 readtime = "*"
-
+gunicorn = {version = "*", sys_platform= "== 'linux'"}
 [requires]
 python_version = "3.7"
 
