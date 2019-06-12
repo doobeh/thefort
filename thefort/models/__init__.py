@@ -175,9 +175,9 @@ class QuickLink(db.Model):
     markdown = db.Column(db.Text)
     content = db.Column(db.Text)
     published = db.Column(db.Boolean, default=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
-    user = db.relationship("User", backref=db.backref("quick_links", lazy="dynamic"))
     created = db.Column(db.DateTime, default=datetime.now)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    user = db.relationship("User", backref=db.backref("quick_links", lazy="dynamic", order_by=created.desc()))
 
     def __init__(self, user, markdown):
         self.markdown = markdown
