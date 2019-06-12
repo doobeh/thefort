@@ -126,7 +126,7 @@ def article_edit(ref):
     return render_template("admin/article_edit.html", form=form, article=article)
 
 
-@bp.route("/add-article/added")
+@bp.route("/add-article/edited")
 @login_required
 def article_edited():
     return render_template("admin/article_edited.html")
@@ -170,3 +170,26 @@ def quicklink_create():
 @login_required
 def quicklink_created():
     return render_template("admin/quicklink_created.html")
+
+
+@bp.route("/quick-links")
+@login_required
+def quicklinks():
+    return render_template("admin/quick_links.html")
+
+
+@bp.route("/set-quick-link", methods=["post", "get"])
+@login_required
+def quick_link_set():
+    if not request.is_json:
+        return abort(400)
+    data = request.json
+    status = data.get("status", True)  # default to enabling articles.
+    reference = data.get("ref")
+    ql = QuickLink.query.filter_by(id=reference).first()
+    print(ql)
+    if ql:
+        ql.published = status
+        db.session.commit()
+        return jsonify(status=True, ref=reference)
+    return abort(404)
