@@ -3,7 +3,6 @@ from flask.cli import AppGroup
 from thefort.database import db
 from flask import current_app
 import os
-import random
 from datetime import datetime
 from thefort.models import User, Role
 
@@ -36,13 +35,13 @@ def app_init():
 @user_cli.command("create")
 @click.option("--username", prompt="enter username")
 @click.password_option()
-def user_create(username, password):
+@click.option("--email", prompt="enter email")
+def user_create(username, password, email):
     # Lets check if the user exists already:
     u = User.query.filter_by(username=username).first()
     if u:
         return print("User Already Exists")
-    u = User(username=username, password=password)
-    u.email = username
+    u = User(username=username, password=password, email=email)
     u.active = True
     u.confirmed_at = datetime.now()
 
