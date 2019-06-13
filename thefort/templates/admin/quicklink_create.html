@@ -40,7 +40,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-editor-insert-plugin/2.5.0/js/medium-editor-insert-plugin.min.js"></script>
     <script src="{{ url_for('static', filename='js/bootstrap-token.js') }}"></script>
     <script>
-        var editor = new MediumEditor('.editable');
+        var editor = new MediumEditor('.editable', {
+            toolbar: {
+                buttons: ['bold', 'italic', 'quote', 'anchor', 'h2', 'h3', 'h4', 'h5', 'html', 'orderedlist', 'unorderedlist', 'pre']
+            }
+        });
         window.addEventListener("load", function () {
             $(function () {
                 $('.editable').mediumInsert({
