@@ -19,10 +19,10 @@ code {
   font-size: 80%;
 }
 
-/*.card-text > p {*/
-/*  margin: 0;*/
-/*  padding-bottom: 0;*/
-/*}*/
+.intro > p {
+  margin: 0;
+  padding-bottom: 0;
+}
 
 /* Bootstrap Toggle v2.2.2 corrections for Bootsrtap 4*/
 .toggle-off {
